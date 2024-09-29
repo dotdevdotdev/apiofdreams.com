@@ -24,7 +24,7 @@ async def root():
                 justify-content: center;
                 align-items: center;
                 background-color: black;
-                color: #2ecc71;
+                color: #39ff14;
                 font-family: Arial, sans-serif;
             }
             h1 {
@@ -37,7 +37,7 @@ async def root():
     </head>
     <body>
         <h1>API of Dreams</h1>
-        <p>There is no website available here, this is just the api. For help visit www.dotdev.dev</p>
+        <p>There is no website available here, this is just the api. For help visit <a href="https://www.dotdev.dev">www.dotdev.dev</a></p>
     </body>
     </html>
     """

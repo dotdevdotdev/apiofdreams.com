@@ -1,3 +1,10 @@
 fastapi
 pydantic
 uvicorn
+langchain
+langchain-anthropic
+langchain-core
+langchain-community
+langgraph
+pymongo[srv]
+langchain-openai

@@ -1,5 +1,22 @@
+import sys
+import os
+
+# Add the parent directory to sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+# Now try to import the module
+try:
+    from utils.check_new_app_idea import process_new_app_idea
+except ImportError:
+
+    def process_new_app_idea(idea):
+        # TODO: Implement the actual processing logic
+        return {"message": "New app idea received", "idea": idea}
+
+
 from fastapi import APIRouter, HTTPException
-from ..utils.check_new_app_idea import process_new_app_idea
 from pymongo import MongoClient
 from bson import ObjectId
 

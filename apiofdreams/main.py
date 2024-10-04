@@ -4,6 +4,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from bson import ObjectId
+from apiofdreams.app_ideas import process_new_app_idea
+from mangum import Mangum
+
 
 app = FastAPI()
 
@@ -115,3 +118,8 @@ async def get_all_app_ideas():
 
 # Vercel requires a module named 'app' to be importable
 app = app
+
+# Add this at the end of the file
+from mangum import Mangum
+
+handler = Mangum(app)

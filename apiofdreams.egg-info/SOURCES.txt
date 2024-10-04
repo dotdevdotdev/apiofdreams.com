@@ -1,0 +1,10 @@
+README.md
+setup.py
+apiofdreams/__init__.py
+apiofdreams/app_ideas.py
+apiofdreams/main.py
+apiofdreams.egg-info/PKG-INFO
+apiofdreams.egg-info/SOURCES.txt
+apiofdreams.egg-info/dependency_links.txt
+apiofdreams.egg-info/requires.txt
+apiofdreams.egg-info/top_level.txt

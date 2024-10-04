@@ -1,0 +1,7 @@
+fastapi
+langchain
+langchain_openai
+langgraph
+mangum
+pymongo
+uvicorn

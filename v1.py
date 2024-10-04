@@ -67,7 +67,7 @@ async def vote_app_idea(idea_id: dict):
     return {"message": "Vote recorded successfully"}
 
 
-@router.get("/v1/app-ideas")
+@router.get("/v1/app-ideas/all")
 async def get_all_app_ideas():
     # Retrieve all app ideas from the database
     app_ideas = list(app_ideas_collection.find())

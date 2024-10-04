@@ -11,7 +11,5 @@ setup(
         "langchain",
         "langchain_openai",
         "langgraph",
-        "mangum",
-        # Add any other dependencies your project needs
     ],
 )

@@ -1,12 +1,21 @@
-from fastapi import FastAPI
+import os
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from v1 import router as v1_router
+from pymongo import MongoClient
+from bson import ObjectId
 
 app = FastAPI()
+
+# Initialize MongoDB client
+MONGODB_URI = os.environ.get("MONGODB_URI")
+client = MongoClient(MONGODB_URI)
+db = client["app_ideas"]  # Replace with your actual database name
+app_ideas_collection = db["ideas"]  # Replace with your actual collection name
 
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
+    # Existing HTML response
     return """
     <!DOCTYPE html>
     <html lang="en">
@@ -43,8 +52,56 @@ async def root():
     """
 
 
-# Include the v1 router
-app.include_router(v1_router, prefix="/v1")
+@app.post("/v1/app-ideas/new")
+async def new_app_idea(idea: dict):
+    if "idea" not in idea:
+        raise HTTPException(
+            status_code=400, detail="Missing 'idea' field in request body"
+        )
+
+    new_idea = idea["idea"]
+    result = process_new_app_idea(new_idea)
+
+    return result
+
+
+@app.post("/v1/app-ideas/vote")
+async def vote_app_idea(idea_id: dict):
+    if "ideaId" not in idea_id:
+        raise HTTPException(
+            status_code=400, detail="Missing 'ideaId' field in request body"
+        )
+
+    idea_id_str = idea_id["ideaId"]
+
+    try:
+        # Convert string to ObjectId
+        idea_object_id = ObjectId(idea_id_str)
+    except:
+        raise HTTPException(status_code=400, detail="Invalid ideaId format")
+
+    # Increment the vote count
+    result = app_ideas_collection.update_one(
+        {"_id": idea_object_id}, {"$inc": {"votes": 1}}
+    )
+
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="App idea not found")
+
+    return {"message": "Vote recorded successfully"}
+
+
+@app.get("/v1/app-ideas/all")
+async def get_all_app_ideas():
+    # Retrieve all app ideas from the database
+    app_ideas = list(app_ideas_collection.find())
+
+    # Convert ObjectId to string for JSON serialization
+    for idea in app_ideas:
+        idea["_id"] = str(idea["_id"])
+
+    return {"app_ideas": app_ideas}
+
 
 # Vercel requires a module named 'app' to be importable
 app = app

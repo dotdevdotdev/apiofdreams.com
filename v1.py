@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from utils.check_new_app_idea import process_new_app_idea
+from ..utils.check_new_app_idea import process_new_app_idea
 from pymongo import MongoClient
 from bson import ObjectId
 

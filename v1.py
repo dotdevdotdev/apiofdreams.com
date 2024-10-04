@@ -48,3 +48,15 @@ async def vote_app_idea(idea_id: dict):
         raise HTTPException(status_code=404, detail="App idea not found")
 
     return {"message": "Vote recorded successfully"}
+
+
+@router.get("/v1/app-ideas")
+async def get_all_app_ideas():
+    # Retrieve all app ideas from the database
+    app_ideas = list(app_ideas_collection.find())
+
+    # Convert ObjectId to string for JSON serialization
+    for idea in app_ideas:
+        idea["_id"] = str(idea["_id"])
+
+    return {"app_ideas": app_ideas}

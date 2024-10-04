@@ -117,9 +117,9 @@ async def get_all_app_ideas():
 
 
 # Vercel requires a module named 'app' to be importable
-app = app
+# app = app
 
-# Add this at the end of the file
+# Modify the Mangum handler setup
 from mangum import Mangum
 
-handler = Mangum(app)
+handler = Mangum(app, lifespan="off")
